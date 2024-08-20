@@ -61,7 +61,7 @@ jobs:
     - name: List Google Cloud Projects
       env:
           CLOUDSDK_AUTH_ACCESS_TOKEN: ${{ steps.auth.outputs.access_token }}
-        run: |
+      run: |
           gcloud projects list
     
        # # Alternative option - authentication via credentials json
