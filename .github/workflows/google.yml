@@ -20,8 +20,8 @@ env:
   PROJECT_ID: my-first-gcp-instance-323404
   REGION: us-central1 # TODO: update region of the Artifact Registry
   GKE_CLUSTER_NAME: cluster-1    # TODO: update to cluster name
-  WIF: projects/1020057377922/locations/global/workloadIdentityPools/githubactions/providers/github
-  WIF_SA: github-wif@my-first-gcp-instance-323404.iam.gserviceaccount.com
+  WIF: projects/1020057377922/locations/global/workloadIdentityPools/githubactions/providers/githubwif
+  WIF_SA: test-wif@my-first-gcp-instance-323404.iam.gserviceaccount.com
   
 
 jobs:
