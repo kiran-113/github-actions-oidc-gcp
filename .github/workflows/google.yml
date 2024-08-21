@@ -85,7 +85,7 @@ jobs:
         docker push us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}}
 
     - name: Set up GKE credentials
-      uses: google-github-actions/get-gke-credentials@v0
+      uses: google-github-actions/get-gke-credentials@v1
       with:
           cluster_name: ${{ env.GKE_CLUSTER_NAME }}
           location: ${{ env.REGION }}
