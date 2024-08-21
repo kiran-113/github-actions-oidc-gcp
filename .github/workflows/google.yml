@@ -76,7 +76,7 @@ jobs:
     - id: get-tag
       name: Genarate tag
       run: |
-        RELEASE_TAG=$(date --gmt +%Y-%m-%dT%H%M)
+        RELEASE_TAG=$(date --utc +%Y-%m-%dT%H%M)
         echo "tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
 
     - name: Build Docker image

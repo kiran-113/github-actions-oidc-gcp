@@ -1,5 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
+.dockerignore
 
 # .tfstate files
 *.tfstate
