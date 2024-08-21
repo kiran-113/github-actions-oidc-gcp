@@ -1,10 +1,5 @@
 #This is a sample Image 
 # sudo docker build –t myimage:0.1. 
-# FROM ubuntu 
-
-# RUN apt-get update -y
-# RUN apt-get install -y nginx 
-# CMD [“echo”,”Image created”] 
 
 # Use the Nginx image from Docker Hub
 FROM nginx
