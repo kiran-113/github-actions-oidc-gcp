@@ -98,11 +98,11 @@ jobs:
       # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-          cd kubernetes
+          cd overlays/dev
           pwd
           # replacing the image name in the k8s template
-          ./../kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}}
-          ./../kustomize build . | kubectl apply -f -
+          ../../kustomize edit set image LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE:TAG=us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}}
+          ../../kustomize build . | kubectl apply -f -
 
           # kubectl rollout status deployment/$DEPLOYMENT_NAME
           # kubectl get services -o wide      
