@@ -90,7 +90,7 @@ jobs:
       with:
           cluster_name: ${{ env.GKE_CLUSTER_NAME }}
           location: ${{ env.REGION }}
-          use_connect_gateway: true
+          #use_connect_gateway: true
 
     - name: Debug Kubeconfig
       run: |
