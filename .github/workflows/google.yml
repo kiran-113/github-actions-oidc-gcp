@@ -77,13 +77,18 @@ jobs:
       name: Genarate tag
       run: |
         RELEASE_TAG=$(date --utc +%Y-%m-%dT%H%M)
+        echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
         echo "tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
 
     - name: Build_Docker_image
       id: docker_build 
       run: |-
-        docker build -t us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}} .
-        docker push us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}}
+        IMAGE=us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag }}
+        docker build -t $IMAGE .
+        docker push $IMAGE
+        echo "IMAGE_TAG=$IMAGE" >> $GITHUB_ENV
+      # docker build -t us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}} .
+      # docker push us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag}}
 
     - name: Set up GKE credentials
       uses: google-github-actions/get-gke-credentials@v1
