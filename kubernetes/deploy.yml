@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE #us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:2024-08-21T1017
+        image: LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE
         ports:
         - containerPort: 80
