@@ -110,7 +110,7 @@ jobs:
 
     - name: Deploy to Kubernetes
       env:
-          IMAGE_TAG: ${{ steps.docker_build.outputs.image }} # This uses the fully qualified image name from the docker step
+          IMAGE_TAG: $IMAGE # This uses the fully qualified image name from the docker step
       run: |-
             cd kubernetes
             pwd
