@@ -19,7 +19,7 @@ on:
 env:
   PROJECT_ID: my-first-gcp-instance-323404  # Project_id
   REGION: us-central1 # TODO: update region of the Artifact Registry
-  GKE_CLUSTER_NAME: cluster-1    # TODO: update to cluster name
+  GKE_CLUSTER_NAME: gke-test-1    # TODO: update to cluster name
   WIF: projects/1020057377922/locations/global/workloadIdentityPools/github-wif-pool/providers/githubwif  # Check README.md
   WIF_SA: test-wif@my-first-gcp-instance-323404.iam.gserviceaccount.com   # SA created for this 
   
@@ -65,6 +65,22 @@ jobs:
           gcloud projects list
 
           gcloud iam service-accounts list
+
+    - name: Login to Artifact Registry
+      uses: docker/login-action@v2
+      with:
+        registry: us-central1-docker.pkg.dev
+
+    - id: get-tag
+      name: Genarate tag
+      run: |
+        RELEASE_TAG=$(date --gmt +%Y-%m-%dT%H%M)
+        echo "tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+
+    - name: Build Docker image
+      run: |-
+        docker build -t us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images:${{ steps.get-tag.outputs.tag}} .
+
     
        # # Alternative option - authentication via credentials json
     # # - id: 'auth'
