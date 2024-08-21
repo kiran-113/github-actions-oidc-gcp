@@ -92,12 +92,23 @@ jobs:
           location: ${{ env.REGION }}
           use_connect_gateway: true
 
-    - name: Deploy to Kubernetes
-      env:
-          IMAGE_TAG: ${{ steps.docker_build.outputs.image }} # This uses the fully qualified image name from the docker step
-      run: |-
-            cd kubernetes
-            pwd
-            sed -i 's|LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE|'"$IMAGE_TAG"'|' deploy.yml
-            kubectl apply -f . --validate=false    
+    - name: Debug Kubeconfig
+      run: |
+        echo "Checking kubeconfig:"
+        cat $KUBECONFIG
+        kubectl config view
+  
+    - name: Check Cluster Access
+      run: |
+        echo "Getting nodes list:"
+        kubectl get nodes --v=8      
+
+    # - name: Deploy to Kubernetes
+    #   env:
+    #       IMAGE_TAG: ${{ steps.docker_build.outputs.image }} # This uses the fully qualified image name from the docker step
+    #   run: |-
+    #         cd kubernetes
+    #         pwd
+    #         sed -i 's|LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE|'"$IMAGE_TAG"'|' deploy.yml
+    #         kubectl apply -f . --validate=false    
     
