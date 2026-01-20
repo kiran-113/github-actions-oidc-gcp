@@ -14,15 +14,15 @@ name: Build and Deploy to GKE
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main-1" ]
 
 env:
   PROJECT_ID: my-first-gcp-instance-323404  # Project_id
   REGION: us-central1 # TODO: update region of the Artifact Registry
   GKE_CLUSTER_NAME: gke-test-1    # TODO: update to cluster name
   WIF: projects/1020057377922/locations/global/workloadIdentityPools/github-wif-pool/providers/githubwif  # Check README.md
-  WIF_SA: test-wif@my-first-gcp-instance-323404.iam.gserviceaccount.com   # SA created for this 
-  
+  WIF_SA: test-wif@my-first-gcp-instance-323404.iam.gserviceaccount.com   # SA created for this
+
 
 jobs:
   setup-build-publish-deploy:
@@ -50,13 +50,13 @@ jobs:
         token_format: 'access_token'
         service_account: ${{ env.WIF_SA }}
         access_token_lifetime: 300
-    
+
 
     - name: Install Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       with:
           project_id: ${{ env.PROJECT_ID }}
-  
+
       # List Google Cloud projects
     - name: List Google Cloud Projects
       env:
@@ -81,7 +81,7 @@ jobs:
         echo "tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
 
     - name: Build_Docker_image
-      id: docker_build 
+      id: docker_build
       run: |-
         IMAGE=us-central1-docker.pkg.dev/my-first-gcp-instance-323404/my-images/mynginx:${{ steps.get-tag.outputs.tag }}
         docker build -t $IMAGE .
@@ -102,11 +102,11 @@ jobs:
         echo "Checking kubeconfig:"
         cat $KUBECONFIG
         kubectl config view
-  
+
     - name: Check Cluster Access
       run: |
         echo "Getting nodes list:"
-        kubectl get nodes --v=8      
+        kubectl get nodes --v=8
 
     - name: Deploy to Kubernetes
       env:
@@ -116,5 +116,4 @@ jobs:
             cd kubernetes
             pwd
             sed -i 's|LOCATION-docker.pkg.dev/PROJECT_ID/REPOSITORY/IMAGE|'"$K8s_IMAGE"'|' deploy.yml
-            kubectl apply -f . --validate=false    
-    
+            kubectl apply -f . --validate=false
